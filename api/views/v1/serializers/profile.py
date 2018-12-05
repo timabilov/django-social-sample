@@ -14,6 +14,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('username', 'password', 'email')
 
+    # TODO:
+    # we can use emailhunter.co API right here to validate email as one solution
+    # def validate_email -> check from API
+
     def validate_password(self, data):
         # AUTH_PASSWORD_VALIDATORS does the job.
         password_validation.validate_password(password=data, user=UserProfile)
