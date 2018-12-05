@@ -1,8 +1,5 @@
 # sudo: required
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.23.1
-
 services:
   - docker
 
