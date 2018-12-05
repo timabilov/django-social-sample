@@ -1,7 +1,7 @@
 ## timabilov / django-social-sample [![Build Status](https://travis-ci.org/timabilov/django-social-sample.svg?branch=master)](https://travis-ci.org/timabilov/django-social-sample)
 
 
-######Use `build `and `up` commands with  `-f docker-compose.yml -f docker-compose-prod.yml` parameter for uwsgi bot setup
+###### Use `build `and `up` commands with  `-f docker-compose.yml -f docker-compose-prod.yml` parameter for uwsgi bot setup
 1. docker-compose build
 2. docker-compose run --rm ./manage.py makemigrations
 3. docker-compose run --rm ./manage.py migrate
