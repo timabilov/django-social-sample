@@ -1,3 +1,6 @@
+## timabilov / django-social-sample [![Build Status](https://travis-ci.org/timabilov/django-social-sample.svg?branch=master)](https://travis-ci.org/timabilov/django-social-sample)
+
+
 
 1. docker-compose build
 2. docker-compose run --rm ./manage.py makemigrations
@@ -5,7 +8,7 @@
 4. docker-compose run --rm ./manage.py createsuperuser *(Optional)*
 5. docker-compose up
 
-
+Add your `CLEARBIT_KEY` to configuration `env.secret` if you want.  
 
 >### API
 

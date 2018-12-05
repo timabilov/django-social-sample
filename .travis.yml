@@ -1,0 +1,11 @@
+# sudo: required
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.23.1
+
+services:
+  - docker
+
+script:
+
+  - docker-compose run --rm web pytest -v
