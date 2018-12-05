@@ -1,4 +1,4 @@
-Django==2.0.0
+Django==2.0.8
 Pillow==5
 djangorestframework==3.8.0
 # djangorestframework-jwt abondaned no latest django support

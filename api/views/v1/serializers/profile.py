@@ -16,5 +16,3 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # AUTH_PASSWORD_VALIDATORS does the job.
         password_validation.validate_password(password=data, user=UserProfile)
         return make_password(data)
-
-

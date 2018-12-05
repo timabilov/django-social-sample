@@ -25,8 +25,8 @@ urlpatterns = [
         r'token/', TokenObtainPairView.as_view(), name='token_obtain_pair'
     ),
     path(
-        r'token/ref/', TokenRefreshView.as_view(), name='token_refresh'
+        r'token/refresh/', TokenRefreshView.as_view(), name='token_refresh'
     ),
-    path('registration', UserSignUpAPI.as_view(), name='sign-up'),
+    path('signup/', UserSignUpAPI.as_view(), name='sign-up'),
     path('', include(router.urls)),
 ]

@@ -15,6 +15,8 @@ class UserProfile(AbstractUser):
     ip = models.GenericIPAddressField(blank=True, null=True)
     facebook_id = models.CharField(null=True, blank=True, max_length=250)
     google_id = models.CharField(null=True, blank=True, max_length=250)
+
+    # S3, digital ocean spaces
     img = models.ImageField(upload_to='profile_avatar', null=True, blank=True)
     banned = models.BooleanField(default=False)
     # Search count
