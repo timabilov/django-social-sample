@@ -79,7 +79,7 @@ class Post(models.Model):
     created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.content
+        return f'{self.id} - {self.content}'
 
 
 class PostLike(models.Model):
@@ -94,3 +94,7 @@ class PostLike(models.Model):
         'Post', related_name='liked_users', on_delete=models.CASCADE
     )
     created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+
+        return f'id={self.reacted_id} liked -> {self.post_id}'
