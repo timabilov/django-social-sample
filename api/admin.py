@@ -10,7 +10,9 @@ class CustomUserAdmin(UserAdmin):
     model = UserProfile
     list_display = UserAdmin.list_display + ('last_seen',)
     fieldsets = UserAdmin.fieldsets + (
-            (None, {'fields': ('banned', 'facebook_id', 'google_id', 'ip')}),
+            (None, {'fields': (
+                'banned', 'facebook_id', 'google_id', 'ip', 'bio'
+            )}),
     )
 
 

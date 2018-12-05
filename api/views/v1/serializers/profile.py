@@ -8,9 +8,11 @@ from api.models import UserProfile
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
 
+    email = serializers.EmailField(required=False)
+
     class Meta:
         model = UserProfile
-        fields = ('username', 'password')
+        fields = ('username', 'password', 'email')
 
     def validate_password(self, data):
         # AUTH_PASSWORD_VALIDATORS does the job.

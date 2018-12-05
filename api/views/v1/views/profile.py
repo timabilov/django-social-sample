@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from api.views.v1.serializers.profile import UserRegistrationSerializer
 
 
+
 class UserSignUpAPI(APIView):
 
     permission_classes = ()
@@ -14,7 +15,11 @@ class UserSignUpAPI(APIView):
         serializer = UserRegistrationSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+
+            if user.email:
+                user.clearbit_api_sync()
+
             return JsonResponse({"message": _("Registered successfully.")})
         else:
             return JsonResponse(serializer.errors, status=400)

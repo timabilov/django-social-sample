@@ -134,3 +134,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+
+CLEARBIT_API_URL = 'https://person.clearbit.com/v2/'
+CLEARBIT_API_KEY = os.environ.get('CLEARBIT_KEY')
