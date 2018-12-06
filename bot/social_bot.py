@@ -1,6 +1,8 @@
+import argparse
 import json
 import random
 import sys
+from json import JSONDecodeError
 from random import choice
 
 import aiohttp
@@ -13,13 +15,6 @@ API_URL = 'http://localhost/v1.0/'
 
 generated_posts_id = []
 
-# default
-RULES = {
-  "users": 40,
-  "max_user_posts": 20,
-  "max_user_likes": 20
-}
-
 
 CONTENT = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
              eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -28,18 +23,49 @@ CONTENT = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
              officia deserunt mollit anim id est laborum."""
-try:
-    with open('config.json') as conf:
-        data = \
-            json.load(conf)
-        if any(type(v) is not int or v < 0 for v in data.values()):
-            print('ERROR: Values must be integer')
-            sys.exit(1)
-        RULES.update(data)
-        print('Configuration loaded...')
 
-except FileNotFoundError:
-    print('Skipped file(config.json) configuration... Using defaults.', RULES)
+parser = argparse.ArgumentParser(description='Behaviour rules')
+
+# defaults
+parser.add_argument('-u', '--users', dest='users', type=int,
+                    help='Number of users to span', required=False,
+                    default=40)
+parser.add_argument('-p', '--max-posts', dest='max_user_posts', type=int,
+                    help='Maximum number of random posts created by user',
+                    default=20, required=False)
+parser.add_argument('-l', '--max-likes', type=int, dest='max_user_likes',
+                    help='Maximum number of random likes created by user',
+                    default=20, required=False)
+
+parser.add_argument('-f', '--config', type=str, dest='config-file',
+                    help='Maximum number of random likes created by user',
+                    required=False)
+
+args = vars(parser.parse_args())
+RULES = args
+# can read from args too.
+if args.get('config-file'):
+    try:
+        with open(args.get('config-file')) as conf:
+            try:
+                data = json.load(conf)
+            except JSONDecodeError as e:
+                sys.exit(f'Error loading config.json: {e}')
+
+            if any(
+                type(v) is not int or v < 0 for v in data.values()
+                if v in RULES.keys()
+            ):
+                sys.exit('ERROR: Values must be integer')
+
+            RULES.update(data)
+            print('Configuration loaded...')
+
+    except FileNotFoundError:
+        print('Skip bad file  configuration... Using args as default.')
+
+
+print(RULES)
 
 
 class User:
@@ -51,18 +77,18 @@ class User:
 
     async def request(self, method, url, *args, **kwargs):
 
-        # server drops connection so we use 10 attempts to not miss any req.
-        for i in range(10):
+        # server drops connection so we use 20 attempts to not miss any req.
+        exc = None
+        for i in range(20):
             try:
                 async with self.session.request(method, url, *args, **kwargs) as response:
                     return await response.json()
 
-            except aiohttp.ClientError:
-                pass
+            except aiohttp.ClientError as e:
+                exc = e
                 # print(f'{i} Server disconnect... Try again {url}')
 
-        print('Server timeout..')
-        sys.exit(1)
+        sys.exit(f'Host error: {exc}')
 
     async def _create_content(self, content):
         return await self.request('POST', API_URL + 'posts/', headers={
@@ -70,6 +96,8 @@ class User:
         }, data={"content": content})
 
     async def get_token(self):
+
+        # we can load users from some file or external resources as example
 
         await self.request('POST', API_URL + 'signup/',
                            data={"username": self.username,

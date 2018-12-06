@@ -13,7 +13,8 @@ Open `http://localhost/`
 
 For spamming/testing API in `bot/` directory
 
-`python social_bot.py`  
+`python social_bot.py -u 100 -p 20 -l 20`  
+`python social_bot.py --config config.json`  
  
 
 >### API
