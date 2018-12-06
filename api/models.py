@@ -14,7 +14,7 @@ class UserProfile(AbstractUser):
 
     email = models.EmailField(_('Email address'), blank=True)
     first_name = models.CharField(_('first name'), max_length=100, blank=True)
-    last_name = models.CharField(_('first name'), max_length=100, blank=True)
+    last_name = models.CharField(_('last_name'), max_length=100, blank=True)
     last_seen = models.DateTimeField(auto_now=True)
     ip = models.GenericIPAddressField(blank=True, null=True)
     facebook_id = models.CharField(null=True, blank=True, max_length=250)
@@ -23,7 +23,7 @@ class UserProfile(AbstractUser):
     # S3, digital ocean spaces
     img = models.ImageField(upload_to='profile_avatar', null=True, blank=True)
     banned = models.BooleanField(default=False)
-    # Search count
+
     bio = models.TextField(default='')
 
     def __str__(self):

@@ -35,16 +35,15 @@ class PostViewSet(viewsets.GenericViewSet,
 
             serializer = self.get_serializer(page, many=True)
             return JsonResponse({
-                "perPage": self.per_page,
                 "posts": serializer.data,
-
+                "count": self.per_page,
             })
 
         queryset = queryset[:self.per_page]
         serializer = self.get_serializer(queryset, many=True)
         return JsonResponse({
             "posts": serializer.data,
-            "perPage": self.per_page,
+            "count": self.per_page,
         })
 
     def perform_create(self, serializer):

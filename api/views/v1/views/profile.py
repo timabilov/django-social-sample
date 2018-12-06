@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from api.views.v1.serializers.profile import UserRegistrationSerializer
 
 
-
 class UserSignUpAPI(APIView):
 
     permission_classes = ()

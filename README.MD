@@ -65,7 +65,8 @@ Posts list
             "likes": 0,
             "liked": false
         }
-  ]
+  ],
+  "count": 1
 }
 ```
 
