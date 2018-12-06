@@ -1,7 +1,7 @@
 ## timabilov / django-social-sample [![Build Status](https://travis-ci.org/timabilov/django-social-sample.svg?branch=master)](https://travis-ci.org/timabilov/django-social-sample)
 
 Install `docker` and `docker-compose` 
-###### docker-compose-prod.yml used for `uwsgi bot setup`
+###### docker-compose-prod.yml used for `uwsgi bot setup`  ONLY. use cloud container services instead(ECS, etc.). 
 
 
 `./startup.sh`
