@@ -40,7 +40,8 @@ body{
 }
 
 .like-count {
-
+    float:left;
+    margin-left: 1%;
     font-size: 13px;
 }
 
@@ -54,4 +55,15 @@ body{
 
 .post-footer {
     margin-top: 3% ;
+}
+
+.post-time {
+    /*font-family: "Verdana";*/
+
+    /*font-style: italic;*/
+    /*margin-left: 1%;*/
+    /*margin-right: 3%;*/
+    color: gray;
+    font-size: 14px;
+
 }

@@ -23,7 +23,7 @@
 
     <p>{{ post.content }}</p>
 
-    <div class="post-footer" style="text-align: right;"><img style="vertical-align: middle" src="{% static 'img/heart.png' %}" width="15" height="15"> <span class="like-count">{{ post.likes }}</span></div>
+    <div class="post-footer" style="text-align: right;"><img style="vertical-align: middle; float:left" src="{% static 'img/heart.png' %}" width="15" height="15"><span class="like-count">{{ post.likes }}</span> <span class="post-time">{{ post.date }}</span></div>
 
 
 </div>

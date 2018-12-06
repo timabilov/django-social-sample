@@ -86,9 +86,9 @@ class PostViewSet(viewsets.GenericViewSet,
                 # with getting already created object
                 # but in that case we can be trapped to case where obj removed.
                 # Todo a)simple solution, job with synchronous queue for high load likes for whole likes issue
-                    return JsonResponse({
-                        "message": "Please try one more time",
-                    }, status=429)
+                return JsonResponse({
+                    "message": "Please try one more time",
+                }, status=429)
 
         return JsonResponse({
             "message": "Successfully"
