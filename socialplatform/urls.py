@@ -15,13 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from socialplatform.settings import base as settings
+from django.conf import settings
 
 from django.conf.urls.static import static
 
+from socialplatform.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
-    # static should be served by cloud storage or some other proxy
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+    # template
+    path('', index)
+
+]
+
+# static should be served by cloud storage or some other proxy
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

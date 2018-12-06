@@ -1,0 +1,57 @@
+
+body{
+
+    font-family: "Avenir Next";
+}
+
+.head{
+    margin-top: 7%;
+    margin-bottom: 6%;
+    text-align: center;
+}
+
+.subhead{
+
+    font-weight: 400 ;
+
+
+    text-align: center;
+}
+
+.stat {
+
+    display: inline-block;
+    text-align: center;
+    width: 49%;
+    font-size: 20px;
+
+}
+
+
+.stat-number {
+
+    color: #4ad8b9;
+}
+
+
+.post {
+    margin: 2% 10%;
+    margin-top: 3%;
+}
+
+.like-count {
+
+    font-size: 13px;
+}
+
+.break-line {
+
+    border: #f3f3f3 solid  1px;
+    width:80%;
+
+}
+
+
+.post-footer {
+    margin-top: 3% ;
+}

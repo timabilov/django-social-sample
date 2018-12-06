@@ -1,22 +1,20 @@
 ## timabilov / django-social-sample [![Build Status](https://travis-ci.org/timabilov/django-social-sample.svg?branch=master)](https://travis-ci.org/timabilov/django-social-sample)
 
+Install `docker` and `docker-compose` 
+###### docker-compose-prod.yml used for `uwsgi bot setup`
 
-###### Use `build `and `up` commands with  `-f docker-compose.yml -f docker-compose-prod.yml` parameter for uwsgi bot setup
-1. docker-compose build
-2. docker-compose run --rm ./manage.py makemigrations
-3. docker-compose run --rm ./manage.py migrate
-4. docker-compose run --rm ./manage.py createsuperuser *(Optional)*
-5. docker-compose up
+
+`./startup.sh`
+
 
 Add your `CLEARBIT_KEY` to configuration `env.secret` if you want.
 
+Open `http://localhost/` 
 
 For spamming/testing API in `bot/` directory
 
 `python social_bot.py`  
  
-For better request serving use uwsgi setup(see above).
-
 
 >### API
 

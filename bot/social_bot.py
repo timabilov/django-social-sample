@@ -20,6 +20,14 @@ RULES = {
   "max_user_likes": 20
 }
 
+
+CONTENT = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+             eiusmod tempor incididunt ut labore et dolore magna aliqua.
+             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+             nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+             officia deserunt mollit anim id est laborum."""
 try:
     with open('config.json') as conf:
         data = \
@@ -79,7 +87,7 @@ class User:
 
         # generate content
         posts = await asyncio.gather(*[
-            asyncio.ensure_future(self._create_content(f"{self.username} content # {i} "))
+            asyncio.ensure_future(self._create_content(f"{self.username} content #{i}: {CONTENT} "))
             for i in range(0, random.randint(0, RULES['max_user_posts']))
         ])
 

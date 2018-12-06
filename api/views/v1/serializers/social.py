@@ -15,7 +15,7 @@ class ShortUserSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     user = ShortUserSerializer(read_only=True)
-    content = serializers.CharField(max_length=400)
+    content = serializers.CharField(max_length=1000)
     date = serializers.SerializerMethodField(read_only=True)
     likes = serializers.IntegerField(read_only=True)
     liked = serializers.SerializerMethodField(read_only=True)

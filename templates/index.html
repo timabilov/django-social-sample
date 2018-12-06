@@ -1,0 +1,35 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<h1 class="head">Social activity</h1>
+
+<div>
+    <span class="stat">Posts: <span class="stat-number">{{ count }}</span></span>
+    <span class="stat">Total likes: <span class="stat-number">{{ likes }}</span></span>
+</div>
+
+<h2 class="head subhead"> Latest posts</h2>
+
+{% for post in posts %}
+<div class="post">
+
+    <p>{{ post.content }}</p>
+
+    <div class="post-footer" style="text-align: right;"><img style="vertical-align: middle" src="{% static 'img/heart.png' %}" width="15" height="15"> <span class="like-count">{{ post.likes }}</span></div>
+
+
+</div>
+<hr class="break-line">
+{% endfor %}
+
+
+</body>
+</html>
