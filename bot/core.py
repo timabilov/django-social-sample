@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 class User:
     """
      Client for simulating user behaviour handling server API.
+     Token refreshed automatically.
      Username and password is necessary for refreshing token.
     """
 
@@ -77,18 +78,39 @@ class User:
 
         return False
 
-    async def _request(self, method, url, *args, **kwargs):
+    async def _token_lock(self):
+
+        while not self.token:
+            await asyncio.sleep(0.1)
+
+        return True
+
+    async def _request(self, method, url, auth_header=True, *args, **kwargs):
 
         exc = None
-        if self.token:
-            kwargs.setdefault('headers', {}).update(self._auth_header())
+        # attempts for disconnect or token expiration.
+        for i in range(10):
 
-        # server drops connection so we use 20 attempts to not miss any req.
-        for i in range(20):
+            if self.token:
+                kwargs.setdefault('headers', {}).update(self._auth_header())
+
             try:
                 async with self.session.request(method, url, *args, **kwargs) as response:
 
-                    # TODO: check if status 401 refresh token
+                    if response.status == 401:
+                        if auth_header and not self.token:
+
+                            # other tasks for that user most likely will get 401
+                            # too, lock until new token issued.
+                            # TODO: implement proper lock/pause
+                            await self._token_lock()
+                            continue
+                        response.close()
+
+                        self.token = None
+                        await self._get_token()
+
+                        continue
                     return await response.json(), response.status
 
             except aiohttp.ClientError as e:
@@ -108,6 +130,7 @@ class User:
         # we can load users from some file or external resources as example
 
         response, status = await self._request('POST', User.LOGIN_URL,
+                                               auth_header=False,
                                                data={
                                                     "username": self.username,
                                                     "password": self.password
@@ -151,6 +174,7 @@ class User:
 
     async def signup(self):
         _, status = await self._request('POST', User.SIGNUP_URL,
+                                        auth_header=False,
                                         data={
                                             "username": self.username,
                                             "password": self.password

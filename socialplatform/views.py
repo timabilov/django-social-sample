@@ -5,7 +5,7 @@
 from django.shortcuts import render_to_response
 
 from api.models import Post, PostLike
-from api.views.v1.serializers.social import PostSerializer
+from api.v1.serializers.social import PostSerializer
 
 
 def index(request):

@@ -1,6 +1,6 @@
 ## timabilov / django-social-sample [![Build Status](https://travis-ci.org/timabilov/django-social-sample.svg?branch=master)](https://travis-ci.org/timabilov/django-social-sample)
 
-Install `docker` and `docker-compose` 
+Required `docker` and `docker-compose` 
 ###### docker-compose-prod.yml  is not production ready. used for `uwsgi bot setup`  ONLY. 
 
 
@@ -11,7 +11,7 @@ Add your `CLEARBIT_KEY` to configuration `env.secret` if you want.
 
 Open `http://localhost/` 
 
-For spamming/testing API in `bot/` directory
+For spamming/testing API in `bot/` directory:
 
 `python social_bot.py -u 100 -p 20 -l 20`  
 `python social_bot.py --config config.json`  

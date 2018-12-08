@@ -10,7 +10,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from api.models import UserProfile, Post, PostLike
 from django.utils.translation import ugettext_lazy as tr
-from api.views.v1.serializers.social import PostSerializer
+from api.v1.serializers.social import PostSerializer
+from django.db import transaction
 
 logger = logging.getLogger(__name__)
 
@@ -61,25 +62,29 @@ class PostViewSet(viewsets.GenericViewSet,
             like = PostLike.objects.filter(
                 post_id=post.id, reacted_id=self.request.user.id
             )
-            deleted, _ = like.delete()
-            if not deleted:
-                return JsonResponse({
-                    "message": "Not found"
-                }, status=404)
-            Post.objects.filter(id=post.id).update(likes=F('likes') - 1)
+
+            with transaction.atomic():
+                deleted, _ = like.delete()
+                if not deleted:
+                    return JsonResponse({
+                        "message": "Not found"
+                    }, status=404)
+                Post.objects.filter(id=post.id).update(likes=F('likes') - 1)
         elif self.request.method == 'POST':
             try:
-                like, created = PostLike.objects.get_or_create(
-                    post_id=post.id, reacted_id=self.request.user.id
-                )
+                with transaction.atomic():
+                    like, created = PostLike.objects.get_or_create(
+                        post_id=post.id, reacted_id=self.request.user.id
+                    )
 
-                if created:
-                    Post.objects.filter(id=post.id).update(likes=F('likes') + 1)
-                else:
-                    # we can omit this response - depends on arch and client
-                    return JsonResponse({
-                        "message": tr("You've already liked this post"),
-                    }, status=400)
+                    if created:
+                        Post.objects.filter(id=post.id).update(likes=F('likes') + 1)
+                    else:
+                        # we can omit this response - depends on arch and client
+                        return JsonResponse({
+                            "message": tr("You've already liked this post"),
+                        }, status=400)
+
             except IntegrityError:
                 # get or create  handles race condition problem
                 # with getting already created object

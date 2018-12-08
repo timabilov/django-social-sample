@@ -1,6 +1,7 @@
 import argparse
 import json
 import logging
+import random
 
 import sys
 from json import JSONDecodeError
@@ -72,12 +73,16 @@ async def simulate_when_done(coro):
 
 async def main():
 
-    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector()) as session:
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(force_close=True)) as session:
 
         logger.info('Start generating users...')
-        tasks = [asyncio.ensure_future(User.generate(session)) for _ in range(RULES['users'])]
+        tasks = [asyncio.ensure_future(User.generate(
+            session,
+            max_posts=random.randint(0, RULES['max_user_posts']),
+            max_likes=random.randint(0, RULES['max_user_likes']),
+        )) for _ in range(RULES['users'])]
 
-        logger.info('Waiting for generating content...')
+        logger.info('Waiting for content generation...')
         # Start simulation right after release of each task
         await asyncio.gather(*[
             asyncio.ensure_future(simulate_when_done(awaited_user))
@@ -90,3 +95,4 @@ if __name__ == '__main__':
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
+

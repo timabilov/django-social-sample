@@ -10,8 +10,8 @@ from rest_framework_simplejwt.views import (
 # TODO pretend that there  is swagger route.
 
 
-from api.views.v1.views.profile import UserSignUpAPI
-from api.views.v1.views.social import PostViewSet
+from api.v1.views.profile import UserSignUpAPI
+from api.v1.views.social import PostViewSet
 
 router = SimpleRouter()
 router.register(

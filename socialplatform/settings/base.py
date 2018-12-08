@@ -145,3 +145,10 @@ REST_FRAMEWORK = {
 
 CLEARBIT_API_URL = 'https://person.clearbit.com/v2/'
 CLEARBIT_API_KEY = os.environ.get('CLEARBIT_KEY')
+
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+}
