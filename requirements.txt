@@ -1,5 +1,5 @@
 Django==2.0.8
-Pillow==5
+Pillow==8.1.1
 djangorestframework==3.8.0
 # djangorestframework-jwt abondaned no latest django support
 djangorestframework_simplejwt
