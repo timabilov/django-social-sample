@@ -211,7 +211,7 @@ class User:
         Generate likes for amount of quota left
         :return:
         """
-        if self.__exhausted_limit('likes'):
+        if self.__exhausted_limit('likes') or not User._total_posts:
             return
 
         await asyncio.gather(*[
