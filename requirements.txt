@@ -1,6 +1,6 @@
 Django==2.0.8
 Pillow==9.0.0
-djangorestframework==3.8.0
+djangorestframework==3.11.2
 # djangorestframework-jwt abondaned no latest django support
 djangorestframework_simplejwt
 pytest==4.0.1
